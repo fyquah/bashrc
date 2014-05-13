@@ -1,7 +1,6 @@
 #include <string>
 #include <iostream>
 #include <cstdio>
-#include <dirent.h>
 using namespace std;
 
 string exec(char *cmd, bool downcase = false) {
@@ -27,20 +26,14 @@ string exec(char *cmd, bool downcase = false) {
 	return result;
 }
 
-string get_current_branch(string input) {
-	int star = input.find("*");
-	int newline = input.find("\n", star);
-	return input.substr(star+2, newline-star-2);
-}
-
-short get_colored_string(string status, string branch) {
-	if (status.find("untracked files") != string::npos) {
+short get_code(string status) {
+	if (status.find("untracked files") != string::npos)
 		return 31;
-	} else if (status.find("to be committed") != string::npos || status.find("not staged") != string::npos) {
+	else if (status.find("to be committed") != string::npos || status.find("not staged") != string::npos)
 		return 33;
-	} else {
+	else 
 		return 32;
-	}
+	
 }
 
 int main() {
@@ -48,14 +41,10 @@ int main() {
 		cout << 30 << endl;
 		return 0;
 	}
-	string status = exec("git status 2> /dev/null", true);
-	string branch = exec("git branch 2> /dev/null");
 
-	if (status.length() == 0 || branch.length() == 0) {
-		cout << 30 << endl;
-		return 0;
-	}
-	cout << get_colored_string(status , branch) << endl;
+	string status = exec("git status 2> /dev/null", true);
+	
+	cout << get_code(status , branch) << endl;
 
 	return 0;
 }
