@@ -1,6 +1,7 @@
 #include <string>
 #include <iostream>
 #include <cstdio>
+#include <dirent.h>
 using namespace std;
 
 string exec(char *cmd, bool downcase = false) {
@@ -35,6 +36,8 @@ string get_current_branch(string input) {
 }
 
 int main() {
+	if(opendir("./.git") == NULL) return 0;
+
 	string status = exec("git status 2> /dev/null", true);
 	string branch = exec("git branch 2> /dev/null");
 

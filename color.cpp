@@ -1,6 +1,7 @@
 #include <string>
 #include <iostream>
 #include <cstdio>
+#include <dirent.h>
 using namespace std;
 
 string exec(char *cmd, bool downcase = false) {
@@ -16,7 +17,6 @@ string exec(char *cmd, bool downcase = false) {
 		}
 	}
 	pclose(pipe);
-
 	if (downcase) {
 		for (int i = 0; i < result.length(); i++) {
 			if (result[i] >= 'A' && result[i] <= 'Z') {
@@ -24,7 +24,6 @@ string exec(char *cmd, bool downcase = false) {
 			}
 		}
 	}
-
 	return result;
 }
 
@@ -45,11 +44,15 @@ short get_colored_string(string status, string branch) {
 }
 
 int main() {
+	if(opendir("./.git") == NULL){
+		cout << 30 << endl;
+		return 0;
+	}
 	string status = exec("git status 2> /dev/null", true);
 	string branch = exec("git branch 2> /dev/null");
 
 	if (status.length() == 0 || branch.length() == 0) {
-		cout << 29 << endl;
+		cout << 30 << endl;
 		return 0;
 	}
 	cout << get_colored_string(status , branch) << endl;
