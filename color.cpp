@@ -1,6 +1,7 @@
 #include <string>
 #include <iostream>
 #include <cstdio>
+#include <dirent.h>
 using namespace std;
 
 string exec(char *cmd, bool downcase = false) {
@@ -43,8 +44,8 @@ int main() {
 	}
 
 	string status = exec("git status 2> /dev/null", true);
-	
-	cout << get_code(status , branch) << endl;
+
+	cout << get_code(status) << endl;
 
 	return 0;
 }
