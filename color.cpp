@@ -42,7 +42,7 @@ int main() {
 		cout << 30 << endl;
 		return 0;
 	}
-
+	
 	string status = exec("git status 2> /dev/null", true);
 
 	cout << get_code(status) << endl;
